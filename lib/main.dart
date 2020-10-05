@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:math_expressions/math_expressions.dart';
 
 void main() {
-  runApp(CalculatorLess());
+  runApp(Calc());
 }
 
-class CalculatorLess extends StatelessWidget {
+class Calc extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
