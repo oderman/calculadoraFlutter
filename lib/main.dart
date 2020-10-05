@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 void main() {
   runApp(Calc());
@@ -9,7 +10,7 @@ class Calc extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Calculator',
+      title: 'Calculadora',
       theme: ThemeData(primarySwatch: Colors.grey),
       home: CalculatorFull(),
     );
@@ -22,55 +23,61 @@ class CalculatorFull extends StatefulWidget {
 }
 
 class _CalculatorFullState extends State<CalculatorFull> {
-  String equation = '0';
-  String result = '0';
-  String expression = '';
-  double equationFontSize = 38;
-  double resultFontSize = 48;
+  String operacion = '0';
+  String resultado = '0';
+  String eje = '';
+  double operacionFontSize = 30;
+  double resultadoFontSize = 45;
 
   buttonPressed(String buttonText) {
     setState(() {
-      if (buttonText == 'AC') {
-        equation = '0';
-        result = '0';
-        expression = '';
-        equationFontSize = 38;
-        resultFontSize = 48;
+      if (buttonText == 'ac') {
+        operacion = '0';
+        resultado = '0';
+        eje = '';
+        operacionFontSize = 30;
+        resultadoFontSize = 45;
       } else if (buttonText == '⌫') {
-        equationFontSize = 38;
-        resultFontSize = 48;
-        equation = equation.substring(0, equation.length - 1);
-        if (equation == '') {
-          equation = '0';
+        operacionFontSize = 30;
+        resultadoFontSize = 45;
+        operacion = operacion.substring(0, operacion.length - 1);
+        if (operacion == '') {
+          operacion = '0';
         }
       } else if (buttonText == '=') {
-        equationFontSize = 38;
-        resultFontSize = 48;
+        operacionFontSize = 30;
+        resultadoFontSize = 45;
 
-        expression = equation;
-        expression = expression.replaceAll('×', '*');
+        eje = operacion;
+        eje = eje.replaceAll('×', '*');
 
         try {
           Parser p = Parser();
-          Expression exp = p.parse(expression);
+          Expression exp = p.parse(eje);
 
           ContextModel cm = ContextModel();
-          result = '${exp.evaluate(EvaluationType.REAL, cm)}';
+          resultado = '${exp.evaluate(EvaluationType.REAL, cm)}';
         } catch (e) {
-          result = 'Error';
+          resultado = 'Intente otra operación';
         }
 
         // ignore: unrelated_type_equality_checks
-        if (result == '${double.infinity}') {
-          result = 'Error';
+        if (resultado == '${double.infinity}') {
+          resultado = 'Intente otra operación';
         }
+      } else if (buttonText == 'c') {
+        operacion = '0';
+        resultado = '0';
+        eje = '';
+        operacionFontSize = 30;
+        resultadoFontSize = 45;
       } else {
-        equationFontSize = 38;
-        resultFontSize = 48;
-        if (equation == '0') {
-          equation = buttonText;
+        operacionFontSize = 30;
+        resultadoFontSize = 45;
+        if (operacion == '0') {
+          operacion = buttonText;
         } else {
-          equation = equation + buttonText;
+          operacion = operacion + buttonText;
         }
       }
     });
@@ -103,7 +110,7 @@ class _CalculatorFullState extends State<CalculatorFull> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Calculator'),
+        title: Text('Calculadora'),
       ),
       body: Column(
         children: [
@@ -111,16 +118,16 @@ class _CalculatorFullState extends State<CalculatorFull> {
             alignment: Alignment.centerRight,
             padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
             child: Text(
-              equation,
-              style: TextStyle(fontSize: equationFontSize),
+              operacion,
+              style: TextStyle(fontSize: operacionFontSize),
             ),
           ),
           Container(
             alignment: Alignment.centerRight,
             padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
             child: Text(
-              result,
-              style: TextStyle(fontSize: resultFontSize),
+              resultado,
+              style: TextStyle(fontSize: resultadoFontSize),
             ),
           ),
           Expanded(
@@ -135,37 +142,37 @@ class _CalculatorFullState extends State<CalculatorFull> {
                   children: [
                     TableRow(
                       children: [
-                        buildButton('AC', 1, Colors.grey),
-                        buildButton('⌫', 1, Colors.greenAccent),
-                        buildButton('/', 1, Colors.greenAccent),
+                        buildButton('ac', 1, Colors.black),
+                        buildButton('c', 1, Colors.black),
+                        buildButton('/', 1, Colors.amber),
                       ],
                     ),
                     TableRow(
                       children: [
-                        buildButton('1', 1, Colors.black),
-                        buildButton('2', 1, Colors.black),
-                        buildButton('3', 1, Colors.black),
+                        buildButton('1', 1, Colors.blueAccent),
+                        buildButton('2', 1, Colors.blueAccent),
+                        buildButton('3', 1, Colors.blueAccent),
                       ],
                     ),
                     TableRow(
                       children: [
-                        buildButton('4', 1, Colors.black),
-                        buildButton('5', 1, Colors.black),
-                        buildButton('6', 1, Colors.black),
+                        buildButton('4', 1, Colors.blueAccent),
+                        buildButton('5', 1, Colors.blueAccent),
+                        buildButton('6', 1, Colors.blueAccent),
                       ],
                     ),
                     TableRow(
                       children: [
-                        buildButton('7', 1, Colors.black),
-                        buildButton('8', 1, Colors.black),
-                        buildButton('9', 1, Colors.black),
+                        buildButton('7', 1, Colors.blueAccent),
+                        buildButton('8', 1, Colors.blueAccent),
+                        buildButton('9', 1, Colors.blueAccent),
                       ],
                     ),
                     TableRow(
                       children: [
-                        buildButton('.', 1, Colors.black),
-                        buildButton('0', 1, Colors.black),
-                        buildButton('00', 1, Colors.black),
+                        buildButton('.', 1, Colors.blueAccent),
+                        buildButton('0', 1, Colors.blueAccent),
+                        buildButton('⌫', 1, Colors.amber),
                       ],
                     ),
                   ],
@@ -177,22 +184,22 @@ class _CalculatorFullState extends State<CalculatorFull> {
                   children: [
                     TableRow(
                       children: [
-                        buildButton('×', 1, Colors.greenAccent),
+                        buildButton('×', 1, Colors.amber),
                       ],
                     ),
                     TableRow(
                       children: [
-                        buildButton('-', 1, Colors.greenAccent),
+                        buildButton('-', 1, Colors.amber),
                       ],
                     ),
                     TableRow(
                       children: [
-                        buildButton('+', 1, Colors.greenAccent),
+                        buildButton('+', 1, Colors.amber),
                       ],
                     ),
                     TableRow(
                       children: [
-                        buildButton('=', 2, Colors.grey),
+                        buildButton('=', 2, Colors.black),
                       ],
                     ),
                   ],
