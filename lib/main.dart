@@ -11,7 +11,7 @@ class Calc extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Calculadora',
-      theme: ThemeData(primarySwatch: Colors.grey),
+      theme: ThemeData(primarySwatch: Colors.amber),
       home: CalculatorFull(),
     );
   }
@@ -199,7 +199,7 @@ class _CalculatorFullState extends State<CalculatorFull> {
                     ),
                     TableRow(
                       children: [
-                        buildButton('=', 2, Colors.black),
+                        buildButton('=', 2, Colors.red),
                       ],
                     ),
                   ],
